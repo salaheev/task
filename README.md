@@ -56,3 +56,11 @@ Design and implement web service (REST) application for distance calculation:
 -   Java 8 or newest
 -   JAXB *or* JSON
 -   JEE 8 *or*  Spring Framework
+
+###Checklist:
+- [x] Configuration settings
+- [x] Standing-by data loading by SQL-migration files
+- [x] Used more effective Postgres instead MySQL
+- [x] Initial data uploads by [JSON-file](src/main/resources/data/cities.json)
+- [ ] Check the Distance Matrix-type calculation
+- [ ] Complete and check all actions of endpoints 
