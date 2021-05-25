@@ -5,20 +5,18 @@ import javatesttask.task.repository.CitiesRepository;
 import javatesttask.task.utils.converter.ObjectConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
-import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
-@Configuration
-@ConditionalOnMissingBean(FlywayAutoConfiguration.class)
+@Component
+@ConditionalOnBean(FlywayAutoConfiguration.class)
 @RequiredArgsConstructor
-public class DataFiller {
+public class DataFiller implements ApplicationRunner {
 
     @Value("${resource.path.cities}")
     private File file;
@@ -27,14 +25,12 @@ public class DataFiller {
 
     private final ObjectConverter converterHelper;
 
-    @PostConstruct
-    public List<CityEntity> mapEntityAndFillDb() {
-
-        return converterHelper.readJsonToObject(file)
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        converterHelper.readJsonToObject(file)
                 .stream()
                 .map(p -> new CityEntity(p.getName(), p.getLatitude(), p.getLongitude()))
-                .map(citiesRepository::save)
-                .collect(toList());
+                .forEach(citiesRepository::save);
     }
 }
 
