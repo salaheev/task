@@ -2,15 +2,24 @@ package javatesttask.task.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import javatesttask.task.utils.calculator.Calculator;
+import javatesttask.task.utils.calcutation.CalculationType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+@RequiredArgsConstructor
 @Configuration
 public class Config {
+
+    private final List<Calculator<CalculationType>> calculatorList;
 
     @Value("${resource.path.cities}")
     private String resourcePath;
@@ -33,5 +42,14 @@ public class Config {
         return new File(resourcePath);
     }
 
+    @Bean
+    public Map<? extends CalculationType, Calculator<CalculationType>> calculatorMap() {
+
+        Map<CalculationType, Calculator<CalculationType>> calculatorMap = new HashMap<>();
+
+        calculatorList.forEach(calculator -> calculatorMap.put(calculator.getType(), calculator));
+
+        return calculatorMap;
+    }
 
 }
