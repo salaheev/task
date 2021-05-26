@@ -3,7 +3,7 @@ package javatesttask.task.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import javatesttask.task.utils.calculator.Calculator;
-import javatesttask.task.utils.calcutation.CalculationType;
+import javatesttask.task.utils.calculator.CalculationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Configuration
-public class Config {
+public class DataConfig {
 
     private final List<Calculator<CalculationType>> calculatorList;
 
@@ -48,7 +48,6 @@ public class Config {
         Map<CalculationType, Calculator<CalculationType>> calculatorMap = new HashMap<>();
 
         calculatorList.forEach(calculator -> calculatorMap.put(calculator.getType(), calculator));
-
         return calculatorMap;
     }
 

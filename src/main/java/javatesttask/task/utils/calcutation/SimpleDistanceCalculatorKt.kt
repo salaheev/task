@@ -1,6 +1,7 @@
 package javatesttask.task.utils.calcutation
 
 import javatesttask.task.entity.CityEntity
+import javatesttask.task.utils.calculator.CalculationType
 import org.springframework.stereotype.Component
 import java.lang.Math.PI
 import java.math.RoundingMode

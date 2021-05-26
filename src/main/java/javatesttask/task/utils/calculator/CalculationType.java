@@ -1,4 +1,4 @@
-package javatesttask.task.utils.calcutation;
+package javatesttask.task.utils.calculator;
 
 public enum CalculationType {
 

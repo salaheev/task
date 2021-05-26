@@ -1,7 +1,6 @@
 package javatesttask.task.utils.calculator
 
 import javatesttask.task.entity.CityEntity
-import javatesttask.task.utils.calcutation.CalculationType
 import org.springframework.stereotype.Service
 import java.math.RoundingMode
 import java.text.DecimalFormat
