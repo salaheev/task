@@ -18,7 +18,7 @@ public class CityController {
     @GetMapping("{name}")
     public IterableResponseDto<?> findCityByName(@PathVariable(name = "name") String name) {
 
-        return cityEntityService.findByName(name);
+        return cityEntityService.findBy(name);
     }
 
     @GetMapping("/all")

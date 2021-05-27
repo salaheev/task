@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-public class CitiesServiceImpl implements EntityMapperService<CityEntity> {
+public class CitiesService implements EntityMapperService<CityEntity> {
 
     private final CitiesRepository citiesRepository;
     private final CaseHandler caseHandler;
@@ -30,15 +30,15 @@ public class CitiesServiceImpl implements EntityMapperService<CityEntity> {
 
     @Cacheable(value = "cityByName")
     @Override
-    public IterableResponseDto<?> findByName(String name) {
+    public IterableResponseDto<?> findBy(String param) {
 
-        if (Objects.isNull(name)) {
+        if (Objects.isNull(param)) {
             throw new RuntimeException("Please set city's name and try again");
         }
 
-        List<CityEntity> entities = citiesRepository.findByName(caseHandler.handle(name));
+        List<CityEntity> entities = citiesRepository.findByName(caseHandler.handle(param));
         if (entities.isEmpty()) {
-            throw new NoUnitFoundException("City with name: " + name + " not found");
+            throw new NoUnitFoundException("City with name: " + param + " not found");
         }
 
         return handleResponse(entities);

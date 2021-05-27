@@ -17,13 +17,11 @@ public class DistanceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, targetEntity = CityEntity.class)
+    @OneToOne(orphanRemoval = true, targetEntity = CityEntity.class)
     private CityEntity from;
 
-    @OneToOne(fetch = FetchType.EAGER, orphanRemoval = true, targetEntity = CityEntity.class)
+    @OneToOne(orphanRemoval = true, targetEntity = CityEntity.class)
     private CityEntity to;
 
     private Double distance;
-
-
 }

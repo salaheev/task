@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EntityMapperService<T> {
 
-    IterableResponseDto<?> findByName(String name);
+    IterableResponseDto<?> findBy(String param);
 
     List<T> findAll();
 

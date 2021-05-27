@@ -13,18 +13,19 @@ class MatrixCalculator : Calculator<CalculationType> {
 
     override fun calculate(from: CityEntity, to: CityEntity): String {
 
-        val latitudeA = from.latitude
-        val longitudeA = from.longitude
+        val Ax = from.latitude
+        val Ay = from.longitude
 
-        val latitudeB = to.longitude
-        val longitudeB = to.longitude
+        val Bx = to.longitude
+        val By = to.longitude
 
-        val latitudeBtoA = latitudeB - latitudeA
-        val longitudeBtoA = longitudeB - longitudeA
+        val latitudeBtoA = abs(Bx - Ax)
+        val longitudeBtoA = abs(By - Ay)
 
-        val length = abs(sqrt(latitudeBtoA.pow(2) + longitudeBtoA.pow(2)))
+        val length = sqrt(latitudeBtoA.pow(2) + longitudeBtoA.pow(2)) * 100
+        val formattedDistanceAnswer = Calculator.toDimensional(length)
 
-        return "Matrix type - distance: $length meters."
+        return "Matrix type - distance: ${formattedDistanceAnswer[0]} km ${formattedDistanceAnswer[1]} meters."
     }
 
     override fun getType(): CalculationType {

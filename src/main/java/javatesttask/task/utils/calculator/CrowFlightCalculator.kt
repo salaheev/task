@@ -2,8 +2,6 @@ package javatesttask.task.utils.calculator
 
 import javatesttask.task.entity.CityEntity
 import org.springframework.stereotype.Service
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import kotlin.math.*
 
 @Service
@@ -18,11 +16,15 @@ class CrowFlightCalculator : Calculator<CalculationType> {
         val fromRadianLatitude = convertToRadians(from.latitude)
         val toRadianLatitude = convertToRadians(to.latitude)
 
+        val fromRadianLongitude = convertToRadians(from.longitude)
+        val toRadianLongitude = convertToRadians(to.longitude)
+
         val cL1 = cos(fromRadianLatitude)
         val cL2 = cos(toRadianLatitude)
         val sL1 = sin(fromRadianLatitude)
         val sL2 = sin(toRadianLatitude)
-        val delta = toRadianLatitude - fromRadianLatitude
+
+        val delta = toRadianLongitude - fromRadianLongitude
         val cDelta = cos(delta)
         val sDelta = sin(delta)
 
@@ -45,18 +47,9 @@ class CrowFlightCalculator : Calculator<CalculationType> {
         z2 = -Math.toRadians(z2)
 
         val angRad2 = z2 - 2 * Math.PI * floor(z2 / (2 * Math.PI))
-        val angDeg = angRad2 * 180 / Math.PI
+        val formattedDistanceAnswer = Calculator.toDimensional(distance)
 
-        val decimalFormat = DecimalFormat()
-        decimalFormat.roundingMode = RoundingMode.CEILING
-        val answer = decimalFormat.format(distance)
-
-        val formattedAnswer = answer.split(",".toRegex()).toTypedArray()
-
-//        println("Distance: " + formattedAnswer[0] + " km " + formattedAnswer[1] + " meters.")
-//        println("Initial bearing: $angDeg degrees.")
-        return "CrowFlight type - distance: ${formattedAnswer[0]} km ${formattedAnswer[1]} meters."
-
+        return "CrowFlight type - distance: ${formattedDistanceAnswer[0]} km ${formattedDistanceAnswer[1]} meters."
     }
 
     override fun getType(): CalculationType {
