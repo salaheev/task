@@ -2,7 +2,7 @@ package javatesttask.task.controllers;
 
 import javatesttask.task.dto.IterableResponseDto;
 import javatesttask.task.entity.CityEntity;
-import javatesttask.task.services.EntityMapperService;
+import javatesttask.task.services.EntityService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CityController {
 
-    private final EntityMapperService<CityEntity> cityEntityService;
+    private final EntityService<CityEntity> cityEntityService;
 
     @GetMapping("{name}")
     public IterableResponseDto<?> findCityByName(@PathVariable(name = "name") String name) {

@@ -5,28 +5,23 @@ import javatesttask.task.entity.CityEntity;
 import javatesttask.task.exceptions.NoUnitFoundException;
 import javatesttask.task.exceptions.PaginationException;
 import javatesttask.task.repository.CitiesRepository;
-import javatesttask.task.utils.calculator.CalculationType;
-import javatesttask.task.utils.calculator.Calculator;
 import javatesttask.task.utils.handler.CaseHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class CitiesService implements EntityMapperService<CityEntity> {
+public class CitiesService implements EntityService<CityEntity> {
 
     private final CitiesRepository citiesRepository;
     private final CaseHandler caseHandler;
-
-    @Qualifier("calculatorMap")
-    private final Map<CalculationType, Calculator<CalculationType>> calculatorMap;
 
     @Cacheable(value = "cityByName")
     @Override
@@ -64,6 +59,12 @@ public class CitiesService implements EntityMapperService<CityEntity> {
         } else {
             return cityOnPage;
         }
+    }
+
+    @Transactional
+    @Override
+    public CityEntity saveOne(CityEntity entity) {
+        return citiesRepository.save(entity);
     }
 
     private IterableResponseDto<?> handleResponse(List<CityEntity> entityList) {
