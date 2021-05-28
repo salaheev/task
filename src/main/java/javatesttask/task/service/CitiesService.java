@@ -2,6 +2,7 @@ package javatesttask.task.service;
 
 import javatesttask.task.dto.IterableResponseDto;
 import javatesttask.task.entity.CityEntity;
+import javatesttask.task.exception.IllegalQueryParamException;
 import javatesttask.task.exception.NoUnitFoundException;
 import javatesttask.task.exception.PaginationException;
 import javatesttask.task.repository.CitiesRepository;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,15 +28,24 @@ public class CitiesService implements EntityService<CityEntity> {
 
     @Cacheable(value = "cityByName")
     @Override
-    public IterableResponseDto<?> findBy(String param) {
+    public IterableResponseDto<?> findBy(Object param) {
 
         if (Objects.isNull(param)) {
-            throw new RuntimeException("Please set city's name and try again");
+            throw new IllegalQueryParamException("Please set a city's name and try again");
         }
 
-        List<CityEntity> entities = citiesRepository.findByName(caseHandler.handle(param));
-        if (entities.isEmpty()) {
-            throw new NoUnitFoundException("City with name: " + param + " not found");
+        List<? extends Serializable> entities = null;
+        if (param instanceof String) {
+            entities = citiesRepository.findByName(caseHandler.handle((String) param));
+        }
+
+        if (param instanceof Long) {
+            CityEntity entity = citiesRepository.findById((Long) param).orElseThrow(() -> new NoUnitFoundException("City with param: " + param + " not found"));
+            entities = Collections.singletonList(entity);
+        }
+
+        if (Objects.isNull(entities) || entities.isEmpty()) {
+            throw new NoUnitFoundException("City with param: " + param + " not found");
         }
 
         return handleResponse(entities);
@@ -67,12 +79,31 @@ public class CitiesService implements EntityService<CityEntity> {
         return citiesRepository.save(entity);
     }
 
-    private IterableResponseDto<?> handleResponse(List<CityEntity> entityList) {
+    @Transactional
+    @Override
+    public CityEntity updateOneById(Long id, CityEntity entity) {
 
-        if (entityList.size() <= 1) {
-            return IterableResponseDto.of().response(entityList.get(0)).isIterable(false).build();
+        CityEntity fromDb = null;
+
+        if (!(id > 0) && Objects.nonNull(entity)) {
+
+            fromDb = citiesRepository.findById(id)
+                    .orElseThrow(() -> new NoUnitFoundException("City with id " + id + " not found."));
+
+            if (!fromDb.equals(entity)) {
+                return citiesRepository.save(entity);
+            }
         }
 
-        return IterableResponseDto.of().response(entityList).isIterable(true).build();
+        return entity;
+    }
+
+    private IterableResponseDto<?> handleResponse(List<? extends Serializable> entityList) {
+
+        if (entityList.size() <= 1) {
+            return IterableResponseDto.builder().response(entityList.get(0)).isIterable(false).build();
+        }
+
+        return IterableResponseDto.builder().response(entityList).isIterable(true).build();
     }
 }

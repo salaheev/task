@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@Builder(builderMethodName = "of")
+@Builder
 public class IterableResponseDto<T> implements Serializable, Transferable{
 
     private boolean isIterable;

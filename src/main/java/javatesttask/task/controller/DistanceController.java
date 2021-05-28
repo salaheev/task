@@ -30,7 +30,6 @@ public class DistanceController {
     public DistanceEntity findById(@PathVariable Long id) {
 
         return null;
-
     }
 
     @PostMapping
@@ -49,6 +48,4 @@ public class DistanceController {
 
         return calculationService.calculateById(type, from, to);
     }
-
-
 }
