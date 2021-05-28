@@ -1,11 +1,11 @@
-package javatesttask.task.services;
+package javatesttask.task.service;
 
 import javatesttask.task.dto.IterableResponseDto;
 import javatesttask.task.entity.CityEntity;
-import javatesttask.task.exceptions.NoUnitFoundException;
-import javatesttask.task.exceptions.PaginationException;
+import javatesttask.task.exception.NoUnitFoundException;
+import javatesttask.task.exception.PaginationException;
 import javatesttask.task.repository.CitiesRepository;
-import javatesttask.task.utils.handler.CaseHandler;
+import javatesttask.task.util.handler.CaseHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;

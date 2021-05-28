@@ -1,8 +1,8 @@
-package javatesttask.task.utils;
+package javatesttask.task.util;
 
 import javatesttask.task.entity.CityEntity;
 import javatesttask.task.repository.CitiesRepository;
-import javatesttask.task.utils.converter.ObjectConverter;
+import javatesttask.task.util.converter.ObjectConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;

@@ -1,4 +1,4 @@
-package javatesttask.task.exceptions;
+package javatesttask.task.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

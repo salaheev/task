@@ -2,8 +2,8 @@ package javatesttask.task.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import javatesttask.task.utils.calculator.Calculator;
-import javatesttask.task.utils.calculator.CalculationType;
+import javatesttask.task.util.calculator.Calculator;
+import javatesttask.task.util.calculator.CalculationType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

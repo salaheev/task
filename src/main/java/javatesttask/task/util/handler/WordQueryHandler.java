@@ -1,4 +1,4 @@
-package javatesttask.task.utils.handler;
+package javatesttask.task.util.handler;
 
 import org.springframework.stereotype.Component;
 

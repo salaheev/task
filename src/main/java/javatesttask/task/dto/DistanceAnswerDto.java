@@ -1,7 +1,7 @@
 package javatesttask.task.dto;
 
 import javatesttask.task.entity.CityEntity;
-import javatesttask.task.utils.calculator.CalculationType;
+import javatesttask.task.util.calculator.CalculationType;
 import lombok.*;
 
 @Value(staticConstructor = "of")

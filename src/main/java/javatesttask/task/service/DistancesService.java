@@ -1,17 +1,17 @@
-package javatesttask.task.services;
+package javatesttask.task.service;
 
 import javatesttask.task.dto.DistanceAnswerDto;
 import javatesttask.task.dto.IterableResponseDto;
 import javatesttask.task.dto.Transferable;
 import javatesttask.task.entity.CityEntity;
 import javatesttask.task.entity.DistanceEntity;
-import javatesttask.task.exceptions.IllegalQueryParamException;
-import javatesttask.task.exceptions.NoUnitFoundException;
+import javatesttask.task.exception.IllegalQueryParamException;
+import javatesttask.task.exception.NoUnitFoundException;
 import javatesttask.task.repository.CitiesRepository;
 import javatesttask.task.repository.DistancesRepository;
-import javatesttask.task.utils.calculator.CalculationType;
-import javatesttask.task.utils.calculator.Calculator;
-import javatesttask.task.utils.facade.DistanceFacade;
+import javatesttask.task.util.calculator.CalculationType;
+import javatesttask.task.util.calculator.Calculator;
+import javatesttask.task.util.facade.DistanceFacade;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,4 +1,4 @@
-package javatesttask.task.utils.converter;
+package javatesttask.task.util.converter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.MappingIterator;

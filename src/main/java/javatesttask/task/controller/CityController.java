@@ -1,8 +1,8 @@
-package javatesttask.task.controllers;
+package javatesttask.task.controller;
 
 import javatesttask.task.dto.IterableResponseDto;
 import javatesttask.task.entity.CityEntity;
-import javatesttask.task.services.EntityService;
+import javatesttask.task.service.EntityService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

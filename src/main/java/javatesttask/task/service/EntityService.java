@@ -1,4 +1,4 @@
-package javatesttask.task.services;
+package javatesttask.task.service;
 
 import javatesttask.task.dto.IterableResponseDto;
 

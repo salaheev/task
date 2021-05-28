@@ -1,8 +1,8 @@
-package javatesttask.task.utils.facade;
+package javatesttask.task.util.facade;
 
 import javatesttask.task.dto.DistanceAnswerDto;
 import javatesttask.task.entity.DistanceEntity;
-import javatesttask.task.utils.calculator.CalculationType;
+import javatesttask.task.util.calculator.CalculationType;
 import lombok.Value;
 
 @Value(staticConstructor = "of")

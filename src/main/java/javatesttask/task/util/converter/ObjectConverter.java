@@ -1,4 +1,4 @@
-package javatesttask.task.utils.converter;
+package javatesttask.task.util.converter;
 
 import javatesttask.task.dto.FileToCityDto;
 

@@ -1,4 +1,4 @@
-package javatesttask.task.utils.handler;
+package javatesttask.task.util.handler;
 
 public interface CaseHandler {
 

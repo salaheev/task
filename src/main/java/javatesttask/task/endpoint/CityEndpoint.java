@@ -1,7 +1,7 @@
 package javatesttask.task.endpoint;
 
 import javatesttask.task.entity.CityEntity;
-import javatesttask.task.exceptions.NoUnitFoundException;
+import javatesttask.task.exception.NoUnitFoundException;
 import javatesttask.task.repository.CitiesRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;

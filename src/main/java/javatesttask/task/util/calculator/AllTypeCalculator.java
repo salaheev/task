@@ -1,4 +1,4 @@
-package javatesttask.task.utils.calculator;
+package javatesttask.task.util.calculator;
 
 import javatesttask.task.entity.CityEntity;
 import lombok.Getter;

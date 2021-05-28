@@ -1,10 +1,10 @@
-package javatesttask.task.controllers;
+package javatesttask.task.controller;
 
 import javatesttask.task.dto.DistanceAnswerDto;
 import javatesttask.task.entity.CityEntity;
 import javatesttask.task.entity.DistanceEntity;
-import javatesttask.task.services.Calculable;
-import javatesttask.task.services.EntityService;
+import javatesttask.task.service.Calculable;
+import javatesttask.task.service.EntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
