@@ -1,6 +1,7 @@
 package javatesttask.task.util.calculator
 
 import javatesttask.task.entity.CityEntity
+import lombok.ToString
 import org.springframework.stereotype.Service
 import kotlin.math.*
 

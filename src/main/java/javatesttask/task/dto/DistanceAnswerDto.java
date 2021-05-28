@@ -12,7 +12,7 @@ public class DistanceAnswerDto implements Transferable {
 
     CityEntity to;
 
-    Double distance;
+    Double[] distance;
 
     CalculationType calculationType;
 

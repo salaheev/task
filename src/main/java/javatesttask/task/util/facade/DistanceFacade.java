@@ -13,6 +13,6 @@ public class DistanceFacade {
 
     public DistanceAnswerDto toDto() {
 
-        return DistanceAnswerDto.of(entity.getFrom(), entity.getTo(), entity.getDistance(), CalculationType.valueOf(this.calculationType));
+        return DistanceAnswerDto.of(entity.getFrom(), entity.getTo(), new Double[]{entity.getDistance()}, CalculationType.valueOf(this.calculationType.toUpperCase()));
     }
 }

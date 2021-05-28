@@ -1,24 +1,24 @@
 package javatesttask.task.controller;
 
-import javatesttask.task.dto.DistanceAnswerDto;
+import javatesttask.task.dto.Transferable;
 import javatesttask.task.entity.CityEntity;
 import javatesttask.task.entity.DistanceEntity;
 import javatesttask.task.service.Calculable;
 import javatesttask.task.service.EntityService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/distance")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class DistanceController {
 
     private final EntityService<DistanceEntity> distancesService;
 
-    private final Calculable<CityEntity, DistanceAnswerDto> calculationService;
-
+    private final Calculable<CityEntity, Transferable> calculationService;
 
     @GetMapping
     public List<DistanceEntity> findOnPage(@RequestParam("page") int num) {
@@ -33,7 +33,7 @@ public class DistanceController {
     }
 
     @PostMapping
-    public DistanceAnswerDto calculate(@RequestParam("type") String type,
+    public Transferable calculate(@RequestParam("type") String type,
                                        @RequestBody CityEntity from,
                                        @RequestBody CityEntity to) {
 
@@ -42,9 +42,11 @@ public class DistanceController {
     }
 
     @PostMapping("/byId")
-    public DistanceAnswerDto calculateById(@RequestParam("type") String type,
+    public Transferable calculateById(@RequestParam("type") String type,
                                            @RequestParam Long from,
                                            @RequestParam Long to) {
+
+        if(Objects.isNull(type) && Objects.isNull(from) && Objects.isNull(to)) throw new NullPointerException();
 
         return calculationService.calculateById(type, from, to);
     }

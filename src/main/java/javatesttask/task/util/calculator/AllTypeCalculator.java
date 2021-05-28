@@ -28,14 +28,6 @@ public class AllTypeCalculator implements Calculator<CalculationType> {
 
         }
 
-
-//        List<Double> result = new ArrayList<>(calculatorList.size());
-//
-//        for (Calculator<CalculationType> calculator : calculatorList) {
-//
-//            result.add(calculator.calculate(from, to)[0]);
-//        }
-
         return doubles;
     }
 
