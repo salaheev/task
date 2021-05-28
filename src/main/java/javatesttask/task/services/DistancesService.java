@@ -1,6 +1,8 @@
 package javatesttask.task.services;
 
+import javatesttask.task.dto.DistanceAnswerDto;
 import javatesttask.task.dto.IterableResponseDto;
+import javatesttask.task.dto.Transferable;
 import javatesttask.task.entity.CityEntity;
 import javatesttask.task.entity.DistanceEntity;
 import javatesttask.task.exceptions.IllegalQueryParamException;
@@ -9,6 +11,8 @@ import javatesttask.task.repository.CitiesRepository;
 import javatesttask.task.repository.DistancesRepository;
 import javatesttask.task.utils.calculator.CalculationType;
 import javatesttask.task.utils.calculator.Calculator;
+import javatesttask.task.utils.facade.DistanceFacade;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
@@ -23,11 +27,12 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class DistancesService implements EntityService<DistanceEntity>, Calculable<CityEntity> {
+public class DistancesService implements EntityService<DistanceEntity>, Calculable<CityEntity, Transferable> {
 
     private final DistancesRepository distancesRepository;
 
     private final CitiesRepository citiesRepository;
+
 
     @Qualifier("calculatorMap")
     private final Map<CalculationType, Calculator<CalculationType>> calculatorMap;
@@ -53,29 +58,26 @@ public class DistancesService implements EntityService<DistanceEntity>, Calculab
     @Transactional
     @Override
     public DistanceEntity saveOne(DistanceEntity entity) {
+
         return distancesRepository.save(entity);
     }
 
 
-    public String calculate(String type,
-                            CityEntity from,
-                            CityEntity to) {
+    @Override
+    public DistanceAnswerDto calculate(String type, CityEntity from, CityEntity to) {
 
-        if(Objects.isNull(type) || type.equals("")) {
+        if (Objects.isNull(type) || type.equals("")) {
             throw new IllegalQueryParamException("Empty type parameter, please select a correct one");
         }
 
-        //todo: do calculate by double, show and save in db
-
-        return doCalculate(type, from, to);
+        return saveAndReturn(type, from, to);
     }
 
 
     @Transactional
-    public String calculateById(String type,
-                                Long from,
-                                Long to) {
-        if(Objects.isNull(type) || type.equals("")) {
+    @Override
+    public DistanceAnswerDto calculateById(String type, Long from, Long to) {
+        if (Objects.isNull(type) || type.equals("")) {
             throw new IllegalQueryParamException("Empty type parameter, please select a correct one");
         }
 
@@ -89,17 +91,22 @@ public class DistancesService implements EntityService<DistanceEntity>, Calculab
         CityEntity dbTo = citiesRepository.findById(to)
                 .orElseThrow(() -> new NoUnitFoundException("City with id " + to + " not found."));
 
-        //todo
-        var distanceEnitity = DistanceEntity.builder().from(dbFrom).to(dbTo).distance(null).build();
+        return saveAndReturn(type, dbFrom, dbTo);
+    }
 
-        distancesRepository.save(distanceEnitity);
+    @NonNull
+    private DistanceAnswerDto saveAndReturn(String type, CityEntity dbFrom, CityEntity dbTo) {
+        var calculatedValue = doCalculate(type, dbFrom, dbTo);
 
-        return doCalculate(type, dbFrom, dbTo);
+        DistanceEntity distanceEntity = new DistanceEntity(dbFrom, dbTo, calculatedValue[0]);
+
+        distancesRepository.save(distanceEntity);
+
+        return DistanceFacade.of(distanceEntity, type).getDto();
     }
 
 
-
-    private String doCalculate(String type, CityEntity from, CityEntity to) {
+    private Double[] doCalculate(String type, CityEntity from, CityEntity to) {
         return calculatorMap.getOrDefault(CalculationType.valueOf(type), DEFAULT_ALL_CALCULATOR).calculate(from, to);
     }
 }

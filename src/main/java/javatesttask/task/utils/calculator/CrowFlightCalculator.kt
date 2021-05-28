@@ -11,7 +11,7 @@ class CrowFlightCalculator : Calculator<CalculationType> {
 
     private val planetRadius: Int = 6371
 
-    override fun calculate(from: CityEntity, to: CityEntity): String {
+    override fun calculate(from: CityEntity, to: CityEntity): Array<Double> {
 
         val fromRadianLatitude = convertToRadians(from.latitude)
         val toRadianLatitude = convertToRadians(to.latitude)
@@ -47,9 +47,8 @@ class CrowFlightCalculator : Calculator<CalculationType> {
         z2 = -Math.toRadians(z2)
 
         val angRad2 = z2 - 2 * Math.PI * floor(z2 / (2 * Math.PI))
-        val formattedDistanceAnswer = Calculator.toDimensional(distance)
 
-        return "CrowFlight type - distance: ${formattedDistanceAnswer[0]} km ${formattedDistanceAnswer[1]} meters."
+        return arrayOf(distance)
     }
 
     override fun getType(): CalculationType {

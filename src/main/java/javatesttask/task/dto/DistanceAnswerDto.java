@@ -1,13 +1,19 @@
 package javatesttask.task.dto;
 
+import javatesttask.task.entity.CityEntity;
 import javatesttask.task.utils.calculator.CalculationType;
 import lombok.*;
 
-@Data
-public class DistanceAnswerDto {
+@Value(staticConstructor = "of")
+@EqualsAndHashCode(callSuper = false)
+public class DistanceAnswerDto implements Transferable {
 
-    private final Double distance;
+    CityEntity from;
 
-    private final CalculationType calculationType;
+    CityEntity to;
+
+    Double distance;
+
+    CalculationType calculationType;
 
 }

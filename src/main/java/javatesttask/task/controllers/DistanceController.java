@@ -1,5 +1,6 @@
 package javatesttask.task.controllers;
 
+import javatesttask.task.dto.DistanceAnswerDto;
 import javatesttask.task.entity.CityEntity;
 import javatesttask.task.entity.DistanceEntity;
 import javatesttask.task.services.Calculable;
@@ -16,7 +17,7 @@ public class DistanceController {
 
     private final EntityService<DistanceEntity> distancesService;
 
-    private final Calculable<CityEntity> calculationService;
+    private final Calculable<CityEntity, DistanceAnswerDto> calculationService;
 
 
     @GetMapping
@@ -33,18 +34,18 @@ public class DistanceController {
     }
 
     @PostMapping
-    public String calculate(@RequestParam("type") String type,
-                            @RequestBody CityEntity from,
-                            @RequestBody CityEntity to) {
+    public DistanceAnswerDto calculate(@RequestParam("type") String type,
+                                       @RequestBody CityEntity from,
+                                       @RequestBody CityEntity to) {
 
 
         return calculationService.calculate(type, from, to);
     }
 
     @PostMapping("/byId")
-    public String calculateById(@RequestParam("type") String type,
-                                @RequestParam Long from,
-                                @RequestParam Long to) {
+    public DistanceAnswerDto calculateById(@RequestParam("type") String type,
+                                           @RequestParam Long from,
+                                           @RequestParam Long to) {
 
         return calculationService.calculateById(type, from, to);
     }

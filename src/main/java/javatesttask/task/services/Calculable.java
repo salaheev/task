@@ -1,9 +1,10 @@
 package javatesttask.task.services;
 
-public interface Calculable<E> {
+import javatesttask.task.dto.Transferable;
 
-    String calculate(String type, E from, E to);
+public interface Calculable<E, D extends Transferable> {
 
-    String calculateById(String type, Long from, Long to);
+    D calculate(String type, E from, E to);
 
+    D calculateById(String type, Long from, Long to);
 }

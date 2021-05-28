@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,16 +17,26 @@ public class AllTypeCalculator implements Calculator<CalculationType> {
     private final List<Calculator<CalculationType>> calculatorList;
 
     @Override
-    public String calculate(CityEntity from, CityEntity to) {
+    public Double[] calculate(CityEntity from, CityEntity to) {
 
-        List<String> result = new ArrayList<>(calculatorList.size());
 
-        for (Calculator<CalculationType> calculator : calculatorList) {
+        Double[] doubles = new Double[calculatorList.size()];
 
-            result.add(calculator.calculate(from, to));
+        for (int i = 0; i < doubles.length; i++) {
+
+            doubles[i] = calculatorList.get(i).calculate(from, to)[0];
+
         }
 
-        return String.join(", ", result);
+
+//        List<Double> result = new ArrayList<>(calculatorList.size());
+//
+//        for (Calculator<CalculationType> calculator : calculatorList) {
+//
+//            result.add(calculator.calculate(from, to)[0]);
+//        }
+
+        return doubles;
     }
 
     @Override

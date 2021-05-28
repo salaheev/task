@@ -2,22 +2,29 @@ package javatesttask.task.utils.calculator;
 
 import javatesttask.task.entity.CityEntity;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public interface Calculator<T extends CalculationType> {
 
-    static String[] toDimensional(Double digit) {
+    Map<Integer, String> ACCURACIES_MAP = new HashMap<>() {{
 
-        DecimalFormat decimalFormat = new DecimalFormat();
-        decimalFormat.setRoundingMode(RoundingMode.CEILING);
+        for (int i = 0; i < 6; i++) {
 
-        return decimalFormat
-                .format(digit)
-                .split(",");
+            ACCURACIES_MAP.put(i, "%." + i + "f");
+        }
+
+    }};
+
+    static String toDimensional(Double digit, int precision) {
+        if (precision == 0 || precision > 6) {
+            throw new IllegalArgumentException("Precision size is from 0 until 6.");
+        }
+
+        return String.format(ACCURACIES_MAP.get(precision), digit);
     }
 
-    String calculate(CityEntity from, CityEntity to);
+    Double[] calculate(CityEntity from, CityEntity to);
 
     T getType();
 

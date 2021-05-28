@@ -1,6 +1,5 @@
 package javatesttask.task.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "distances")
-@Builder
 @NoArgsConstructor
 @Data
 public class DistanceEntity {
@@ -24,4 +22,10 @@ public class DistanceEntity {
     private CityEntity to;
 
     private Double distance;
+
+    public DistanceEntity(CityEntity from, CityEntity to, Double distance) {
+        this.from = from;
+        this.to = to;
+        this.distance = distance;
+    }
 }
